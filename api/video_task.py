@@ -5,7 +5,6 @@ FastAPI üzerinden çağrıldığında, video URL'si ve meta veriler ile birlikt
 işleme kuyruğuna alınır.
 
 """
-
 import traceback
 from fastapi import APIRouter, HTTPException
 from fastapi.encoders import jsonable_encoder
@@ -14,7 +13,6 @@ from redis import Redis
 from typing import Optional
 import uuid
 import json
-import os
 from datetime import datetime, timezone
 
 redis_conn = Redis(host="localhost", port=6379, db=0)
@@ -30,6 +28,7 @@ class VideoPayload(BaseModel):
     transaction_uuid: str
     video_url: HttpUrl
     origin_time: Optional[str] = None
+
 
 @router.post("/video-task/")
 async def enqueue_video_task(payload: VideoPayload):

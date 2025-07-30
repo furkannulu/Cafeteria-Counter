@@ -15,9 +15,6 @@ Fonksiyonlar:
 
 Veri Modeli:
 - `AlarmPayload`: Alarm içeriğini temsil eden `transaction_uuid`, `proof_url`, `item_category`, `origin_time` alanlarını içerir.
-
-Not:
-- Alarm verisi sadece uygulama çalıştığı sürece bellekte tutulur. Kalıcı veri tabanı yoktur.
 """
 
 router = APIRouter()
@@ -29,17 +26,6 @@ class AlarmPayload(BaseModel):
     origin_time: str
 
 alarms: List[AlarmPayload] = []  
-
-@router.post("/alarm/")
-async def receive_alarm(payload: AlarmPayload):
-    key = (payload.proof_url, payload.item_category)
-    existing = [(a.proof_url, a.item_category) for a in alarms]
-    if key not in existing:
-        alarms.append(payload)
-        print(f"Alarm alındı: {payload}")
-    else:
-        print(f"Mevcut alarm: {payload}")
-    return {"status": "received"}
 
 @router.get("/alarms/")
 async def list_alarms():
@@ -66,6 +52,7 @@ async def show_proofs():
             '''
         html += "</ul>"
     return html
+
 
 @router.delete("/alarms/clear")
 async def clear_alarms():

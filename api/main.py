@@ -3,7 +3,7 @@ Bu modül, FastAPI tabanlı Cafeteria Counter API uygulamasının giriş noktas�
 
 İşlevler:
 - FastAPI uygulamasını başlatır.
-- `api.routes` modülündeki tüm API rotalarını projeye dahil eder.
+- `Tüm API rotalarını projeye dahil eder.
 
 Başlatıldığında:
 - API dökümantasyonu `/docs` altında Swagger UI ile görüntülenebilir.
@@ -15,7 +15,12 @@ Kullanım:
 
 
 from fastapi import FastAPI
-from api.routes import router
+
+from fastapi import APIRouter
+
+router = APIRouter()
+
+
 
 app = FastAPI(title="Cafeteria Counter API")
 app.include_router(router)

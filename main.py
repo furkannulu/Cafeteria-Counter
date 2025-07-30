@@ -5,26 +5,26 @@ from worker.video_processor import VideoProcessor
 from config import *
 
 settings = {
-    "device": "cuda" if torch.cuda.is_available() else "cpu",  # GPU varsa kullan
-    "tray_class": 0,  # YOLO modelindeki tepsi sınıfı
-    "plate_class": 1,  # YOLO modelindeki tabak sınıfı
-    "conf_threshold": 0.6,  # YOLO için minimum güven skoru
+    "device": "cuda" if torch.cuda.is_available() else "cpu",
+    "tray_class": 0,  
+    "plate_class": 1, 
+    "conf_threshold": 0.6,  
     "crop_left": 250,  # Görüntünün solundan kırpılacak piksel sayısı
     "crop_right": 1750,  # Görüntünün sağından kırpılacak piksel sayısı
-    "stable_confirm_frames": 2,  # Tabak sayısının sabitlenmesi için gereken ardışık kare sayısı
-    "max_lost": 10,  # Bir tepsinin kayıp sayılmadan önce kaybolabileceği maksimum kare sayısı
-    "show_window": True  # `True`: GUI ile göster, `False`: headless (sunucu için)
+    "stable_confirm_frames": 2,  # Tabak sayısının sabitlenmesi için gereken streak sayısı
+    "max_lost": 10,  # Tepsinin kaybolduğunu kesinleştirmek için gereken frame sayısı
+    "show_window": True  
 }
 
 # Video işleyiciyi başlat
 processor = VideoProcessor(
-    model_path="detector.pt",               # YOLOv12 model ağırlıkları
-    video_dir=VIDEO_DOWNLOAD_DIR,          # Videoların indirildiği klasör
-    proof_dir=PROOF_DIR,                   # Alarm görüntülerinin kaydedileceği klasör
+    model_path="detector.pt",               
+    video_dir=VIDEO_DOWNLOAD_DIR,          
+    proof_dir=PROOF_DIR,                   
     settings=settings
 )
 
-# Sonsuz döngü: Redis kuyruğundan görev al ve işle
+# Redis kuyruğundan görev al ve işle
 while True:
     task = dequeue_task()
     if task:
