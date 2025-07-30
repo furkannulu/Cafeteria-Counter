@@ -22,7 +22,7 @@ Bu proje, YOLOv12 modelini kullanarak video dosyaları üzerinde tepsi ve üzeri
 - Uvicorn
 
 ## Proje Yapısı
-``
+```
 Cafeteria-Counter/
 │
 ├── api/ # FastAPI endpoint'leri
@@ -52,7 +52,7 @@ Cafeteria-Counter/
 ├── requirements.txt # Gerekli Python kütüphaneleri
 ├── .gitignore # Versiyon kontrolüne dahil edilmeyecek dosyalar
 └── .gitattributes # Git CRLF/LF yönetimi için dosya nitelikleri
-``
+```
 
 ## Akış Şeması
 
