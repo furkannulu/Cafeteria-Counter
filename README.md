@@ -25,32 +25,34 @@ Bu proje, YOLOv12 modelini kullanarak video dosyaları üzerinde tepsi ve üzeri
 
 Cafeteria-Counter/
 │
-├── api/                       # FastAPI endpoint'leri
-│   ├── alarm_receiver.py      # Alarm JSON kayıtlarını alır
-│   ├── main.py                # FastAPI uygulama başlatıcı
-│   └── video_task.py          # Redis'e video işleme görevi ekler
+├── api/ # FastAPI endpoint'leri
+│ ├── alarm_receiver.py # Alarm JSON kayıtlarını alır
+│ ├── main.py # FastAPI uygulama başlatıcı
+│ └── video_task.py # Redis'e video işleme görevi ekler
 │
-├── worker/                   # Video işleme mantığı
-│   ├── tray.py               # Tepsi takip ve veri yapısı
-│   └── video_processor.py    # YOLO ile tespit ve alarm üretimi
+├── worker/ # Video işleme mantığı
+│ ├── tray.py # Tepsi takip ve veri yapısı
+│ └── video_processor.py # YOLO ile tespit ve alarm üretimi
 │
-├── utils/                    # Yardımcı araçlar
-│   ├── redis_queue.py        # Redis bağlantı ve kuyruk fonksiyonları
-│   └── video_utils.py        # Video ön işleme (örneğin: ışık düzeltme, iou hesaplama)
+├── utils/ # Yardımcı araçlar
+│ ├── redis_queue.py # Redis bağlantı ve kuyruk fonksiyonları
+│ └── video_utils.py # Video ön işleme (ışık düzeltme, iou hesaplama)
 │
-├── videos/                   # İşlenecek videoların bulunması gereken klasör
-├── proofs/                   # Alarm durumlarında oluşturulan kanıt resimleri
-├── alarms/                   # Alarm loglarının JSON olarak tutulduğu klasör
+├── videos/ # İşlenecek videoların bulunması gereken klasör
+├── proofs/ # Alarm durumlarında oluşturulan kanıt resimleri
+├── alarms/ # Alarm loglarının JSON olarak tutulduğu klasör
 │
-├── detector.pt               # YOLOv12 ağırlık dosyası
-├── config.py                 # Ayarlar (model yolları, eşik değerler vs.)
-├── run.py                    # Worker (işçi) başlatıcı
-├── main.py                   # (Eski, büyük ihtimalle legacy giriş noktası)
-├── LICENSE                   # Lisans dosyası
-├── README.md                 # Proje açıklaması
-├── requirements.txt          # Gerekli Python kütüphaneleri
-├── .gitignore                # Versiyon kontrolüne dahil edilmeyecek dosyalar
-└── .gitattributes            # Git dosya nitelikleri (genelde CRLF/LF yönetimi)
+├── detector.pt # YOLOv12 ağırlık dosyası
+├── config.py # Ayarlar (model yolu, eşik değerler vs.)
+├── run.py # Worker (işçi) başlatıcı
+├── main.py # (Eski, büyük ihtimalle legacy giriş noktası)
+│
+├── LICENSE # Lisans dosyası
+├── README.md # Proje açıklaması
+├── requirements.txt # Gerekli Python kütüphaneleri
+├── .gitignore # Versiyon kontrolüne dahil edilmeyecek dosyalar
+└── .gitattributes # Git CRLF/LF yönetimi için dosya nitelikleri
+
 
 ## Akış Şeması
 
