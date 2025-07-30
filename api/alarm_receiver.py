@@ -27,6 +27,17 @@ class AlarmPayload(BaseModel):
 
 alarms: List[AlarmPayload] = []  
 
+@router.post("/alarm/")
+async def receive_alarm(payload: AlarmPayload):
+    key = (payload.proof_url, payload.item_category)
+    existing = [(a.proof_url, a.item_category) for a in alarms]
+    if key not in existing:
+        alarms.append(payload)
+        print(f"Alarm alındı: {payload}")
+    else:
+        print(f"Mevcut alarm: {payload}")
+    return {"status": "received"}
+
 @router.get("/alarms/")
 async def list_alarms():
     return alarms
