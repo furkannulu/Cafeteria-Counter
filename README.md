@@ -55,11 +55,11 @@ Cafeteria-Counter/
 ```
 
 ## Akış Şeması
-
+- Projenin ana dizininde çalışmaya özen gösteriniz. `Cafeteria-Counter/`
 1. FastAPI başlatılır: ` uvicorn run:app --reload`
 2. Redis manuel olarak açılır: `redis-server`
-3. Ana akış dosyası çalıştırılır: `python Cafeteria-Counter/main.py`
-4. `/video-task/` endpoint’ine aşağıdaki gibi istek atılır:
+3. Ana akış dosyası çalıştırılır: `python ./main.py`
+4. `/video-task/` endpoint’ine aşağıdaki gibi istek atılır: → Bu işlem öncesinde ana dizinde oluşturulan `videos/` klasörüne test videolarını eklediğinizden emin olunuz.
    - `video_url`: `http://localhost:8000/videos/test1.mp4`
    - `transaction_uuid`: alarm JSON dosya adı
 5. Görev Redis kuyruğuna eklenir
