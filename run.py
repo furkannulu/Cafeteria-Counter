@@ -6,6 +6,7 @@ from api import video_task, alarm_receiver
 app = FastAPI(title="Cafeteria Counter API")
 
 # Videolar klasörünü static olarak yayınla
+os.makedirs("videos",exist_ok=True)
 video_dir = os.path.join(os.getcwd(), "videos")
 app.mount("/videos", StaticFiles(directory=video_dir), name="videos")
 
