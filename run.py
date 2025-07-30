@@ -11,6 +11,7 @@ video_dir = os.path.join(os.getcwd(), "videos")
 app.mount("/videos", StaticFiles(directory=video_dir), name="videos")
 
 # Proofs klasörünü de static olarak yayınla
+os.makedirs("proofs",exist_ok=True)
 proof_dir = os.path.join(os.getcwd(), "proofs")
 app.mount("/proofs", StaticFiles(directory=proof_dir), name="proofs")
 
