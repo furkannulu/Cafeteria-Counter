@@ -239,42 +239,36 @@ class VideoProcessor:
                 cv2.putText(frame, label, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 0, 0), 2)
         cv2.imshow("İşlenen Görüntü", frame)
         cv2.waitKey(1)
+    
+    @staticmethod
+    def download_video(video_url, target_path):
+        """Video dosyasını HTTP üzerinden indir ve belirtilen path’e kaydet."""
+        try:
+            response = requests.get(video_url, stream=True)
+            response.raise_for_status()
+            with open(target_path, 'wb') as f:
+                for chunk in response.iter_content(chunk_size=8192):
+                    if chunk:
+                        f.write(chunk)
+            return True
+        except Exception as e:
+            print(f"Video indirilemedi: {e}")
+            return False
 
     def process_video_by_url(self, video_url: str, transaction_uuid: str, origin_time: str):
-
         """
         URL'den video dosyasını indirir, geçici dosyaya yazar ve işleme başlatır.
-
-        Args:
-            video_url (str): Video dosyasının uzaktan URL’si.
-            transaction_uuid (str): Görev kimliği.
-            origin_time (str): Görev başlangıç zamanı.
         """
-
-        cap = cv2.VideoCapture(video_url)
-        if not cap.isOpened():
-            print(f"Video açılamadı: {video_url}")
-            return
-
         temp_video_path = tempfile.NamedTemporaryFile(delete=False, suffix=".mp4").name
-        print(f"Video indiriliyor ve geçici dosyaya yazılıyor: {temp_video_path}")
+        print(f"Video indiriliyor: {video_url} → {temp_video_path}")
 
-        writer = cv2.VideoWriter(temp_video_path, cv2.VideoWriter_fourcc(*'mp4v'), 30,
-                                 (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))))
-
-        while True:
-            ret, frame = cap.read()
-            if not ret:
-                break
-            writer.write(frame)
-
-        cap.release()
-        writer.release()
+        if not self.download_video(video_url, temp_video_path):
+            print("Video indirilemedi, işlem iptal edildi.")
+            return
 
         try:
             self.process_video(Path(temp_video_path), transaction_uuid=transaction_uuid, origin_time=origin_time)
         finally:
-            # Video işlense de hata olsa da geçici dosyayı sil
             if os.path.exists(temp_video_path):
                 os.remove(temp_video_path)
                 print(f"Geçici dosya silindi: {temp_video_path}")
